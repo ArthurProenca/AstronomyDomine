@@ -37,6 +37,7 @@ public class CMEAnalysesDTO {
                 .type(this.type.charAt(0))
                 .note(this.note)
                 .externalLink(this.link)
+                .isMostAccurate(this.isMostAccurate)
                 .cmeEnlils(enlilList == null ? null : enlilList.stream().map(CMEEnlilDTO::toEntity).toList())
                 .build();
     }

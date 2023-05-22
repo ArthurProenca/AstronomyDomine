@@ -26,7 +26,7 @@ public class NasaCMEJob {
     @Value("${nasa.api.key}")
     private String nasaApiKey;
 
-    @Scheduled(cron = "0 0 */1 * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void run() {
         log.info("NasaCMEJob started at [{}}", new Date());
         List <CMEDTO> cmeDtos = nasaCMEClient.getCMEByDateInterval(getStartDate(), getEndDate(), nasaApiKey);

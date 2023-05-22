@@ -32,8 +32,14 @@ public class CME extends BaseEntity {
     @Column(name = "ACTIVITY_ID", nullable = false)
     private String activityId;
 
+    @Column(name = "SOURCE_LOCATION")
+    private String sourceLocation;
+
+    @Column(name = "REGION_NUMBER")
+    private Double regionNumber;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CME_ANALYSES_UIDPK", nullable = false)
+    @JoinColumn(name = "CME_UIDPK", nullable = false)
     private List<CMEAnalyses> cmeAnalyses;
 
 }

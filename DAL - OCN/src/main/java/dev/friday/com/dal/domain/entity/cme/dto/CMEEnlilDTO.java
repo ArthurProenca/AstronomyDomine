@@ -16,8 +16,8 @@ import java.util.List;
 public class CMEEnlilDTO {
     private Date modelCompletionTime;
     private Double au;
-    private String estimatedShockArrivalTime;
-    private String estimatedDuration;
+    private Date estimatedShockArrivalTime;
+    private Double estimatedDuration;
     private Double rmin_re;
     private Double kp_18;
     private Double kp_90;
@@ -34,7 +34,14 @@ public class CMEEnlilDTO {
                 .au(this.au)
                 .isEarthGB(this.isEarthGB)
                 .externalLink(this.link)
-                .impacts(impactList.stream().map(CMEImpactDTO::toEntity).toList())
+                .estimatedShockArrivalTime(this.estimatedShockArrivalTime)
+                .estimatedDuration(this.estimatedDuration)
+                .rmin_re(this.rmin_re)
+                .kp_18(this.kp_18)
+                .kp_90(this.kp_90)
+                .kp_135(this.kp_135)
+                .kp_180(this.kp_180)
+                .impacts(impactList == null ? null : impactList.stream().map(CMEImpactDTO::toEntity).toList())
                 .build();
     }
 

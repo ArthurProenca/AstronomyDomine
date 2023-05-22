@@ -21,32 +21,35 @@ public class CMEAnalyses extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uidPk;
 
-    @Column(name = "TIME21_5", nullable = false)
+    @Column(name = "TIME21_5")
     private Date time21_5;
 
-    @Column(name = "LATITUDE", nullable = false)
+    @Column(name = "LATITUDE")
     private Double latitude;
 
-    @Column(name = "LONGITUDE", nullable = false)
+    @Column(name = "LONGITUDE")
     private Double longitude;
 
-    @Column(name = "HALF_ANGLE", nullable = false)
+    @Column(name = "HALF_ANGLE")
     private Double halfAngle;
 
-    @Column(name = "SPEED", nullable = false)
+    @Column(name = "SPEED")
     private Double speed;
 
-    @Column(name = "TYPE", nullable = false)
+    @Column(name = "TYPE")
     private Character type;
 
-    @Column(name = "NOTE", nullable = false, length = 1024)
+    @Column(name = "NOTE", length = 1024)
     private String note;
 
     @Column(name = "EXTERNAL_LINK", nullable = false)
     private String externalLink;
 
+    @Column(name = "IS_MOST_ACCURATE", nullable = false)
+    private Boolean isMostAccurate;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CME_ENLILS_UIDPK", nullable = false)
+    @JoinColumn(name = "CME_ANALYSES_UIDPK", nullable = false)
     private List<CMEEnlil> cmeEnlils;
 
 }

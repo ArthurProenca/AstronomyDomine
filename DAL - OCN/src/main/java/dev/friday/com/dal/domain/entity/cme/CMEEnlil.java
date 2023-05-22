@@ -31,7 +31,7 @@ public class CMEEnlil extends BaseEntity {
     private Date estimatedShockArrivalTime;
 
     @Column(name = "ESTIMATED_DURATION", nullable = true)
-    private Date estimatedDuration;
+    private Double estimatedDuration;
 
     @Column(name = "IS_EARTH_GB", nullable = false)
     private Boolean isEarthGB;
@@ -39,7 +39,22 @@ public class CMEEnlil extends BaseEntity {
     @Column(name = "EXTERNAL_LINK", nullable = false)
     private String externalLink;
 
+    @Column(name = "RMIN_RE")
+    private Double rmin_re;
+
+    @Column(name = "KP_18")
+    private Double kp_18;
+
+    @Column(name = "KP_90")
+    private Double kp_90;
+
+    @Column(name = "KP_135")
+    private Double kp_135;
+
+    @Column(name = "KP_180")
+    private Double kp_180;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CME_IMPACT_UIDPK", nullable = false)
+    @JoinColumn(name = "CME_ENLIL_UIDPK")
     private List<CMEImpact> impacts;
 }

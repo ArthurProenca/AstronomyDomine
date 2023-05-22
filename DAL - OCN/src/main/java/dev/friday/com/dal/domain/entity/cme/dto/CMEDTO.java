@@ -31,7 +31,9 @@ public class CMEDTO {
                 .startTime(this.startTime)
                 .activityId(this.activityID)
                 .note(this.note)
-                .cmeAnalyses(cmeAnalyses.stream().map(CMEAnalysesDTO::toEntity).toList())
+                .regionNumber(this.activeRegionNum == null ? null : this.activeRegionNum.doubleValue())
+                .sourceLocation(this.sourceLocation)
+                .cmeAnalyses(cmeAnalyses == null ? null : cmeAnalyses.stream().map(CMEAnalysesDTO::toEntity).toList())
                 .build();
     }
 

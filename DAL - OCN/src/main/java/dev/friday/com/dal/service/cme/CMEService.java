@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -22,7 +25,16 @@ public class CMEService {
         cmeRepository.save(cme);
     }
 
-    public CMEDTO findAll() {
-        return CMEDTO.fromEntity(cmeRepository.findAll().get(0));
+    public List<CMEDTO> findAll() {
+        List<CME> cmes = cmeRepository.findAll();
+
+        if(cmes.isEmpty()) {
+            log.info("No CMEs found");
+            return null;
+        }
+        List<CMEDTO> cmeDtos = new ArrayList<>();
+        cmes.forEach(cme -> cmeDtos.add(CMEDTO.fromEntity(cme)));
+
+        return cmeDtos;
     }
 }
