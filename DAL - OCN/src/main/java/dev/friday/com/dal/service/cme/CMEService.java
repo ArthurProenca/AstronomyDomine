@@ -15,6 +15,10 @@ public class CMEService {
     private final CMERepository cmeRepository;
 
     public void save(CME cme) {
+        if(cmeRepository.findByActivityId(cme.getActivityId()).isPresent()) {
+            log.info("CME with activityId [{}] already exists", cme.getActivityId());
+            return;
+        }
         cmeRepository.save(cme);
     }
 

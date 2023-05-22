@@ -5,24 +5,16 @@ import dev.friday.com.dal.service.cme.CMEService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController(value = "/api/cme")
 @RequiredArgsConstructor
-public class CMERestController extends BaseController {
+public class CMERestController {
 
     private final CMEService cmeService;
 
-    @PostMapping("/")
-    public ResponseEntity<Object> save(@RequestBody CMEDTO cmeDto) {
-        cmeService.save(cmeDto.toEntity());
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<Object> findAll() {
+    @GetMapping("/v1/")
+    public ResponseEntity<CMEDTO> find() {
         return ResponseEntity.ok(cmeService.findAll());
     }
 }

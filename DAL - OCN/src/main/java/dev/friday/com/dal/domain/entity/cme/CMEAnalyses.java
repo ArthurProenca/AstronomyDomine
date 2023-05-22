@@ -39,10 +39,10 @@ public class CMEAnalyses extends BaseEntity {
     @Column(name = "TYPE", nullable = false)
     private Character type;
 
-    @Column(name = "NOTE", nullable = false)
+    @Column(name = "NOTE", nullable = false, length = 1024)
     private String note;
 
-    @Column(name = "EXTERNA_LINK", nullable = false)
+    @Column(name = "EXTERNAL_LINK", nullable = false)
     private String externalLink;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

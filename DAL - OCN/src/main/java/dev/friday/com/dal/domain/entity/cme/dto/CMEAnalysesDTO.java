@@ -37,7 +37,7 @@ public class CMEAnalysesDTO {
                 .type(this.type.charAt(0))
                 .note(this.note)
                 .externalLink(this.link)
-                .cmeEnlils(enlilList.stream().map(CMEEnlilDTO::toEntity).toList())
+                .cmeEnlils(enlilList == null ? null : enlilList.stream().map(CMEEnlilDTO::toEntity).toList())
                 .build();
     }
 
