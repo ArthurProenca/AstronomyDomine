@@ -2,7 +2,6 @@ package dev.friday.com.dal.job.cme;
 
 
 import dev.friday.com.dal.client.cme.NasaCMEClient;
-import dev.friday.com.dal.domain.entity.cme.dto.CMEDTO;
 import dev.friday.com.dal.service.cme.CMEService;
 import dev.friday.com.dal.utils.date.DateUtils;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,8 +27,8 @@ public class NasaCMEJob {
     @Scheduled(cron = "0 0 * * * *")
     public void run() {
         log.info("NasaCMEJob started at [{}}", new Date());
-        List <CMEDTO> cmeDtos = nasaCMEClient.getCMEByDateInterval(getStartDate(), getEndDate(), nasaApiKey);
-        cmeDtos.forEach(cmeDto -> cmeService.save(cmeDto.toEntity()));
+        nasaCMEClient.getCMEByDateInterval(getStartDate(), getEndDate(), nasaApiKey)
+                .forEach(cmeDTO -> cmeService.save(cmeDTO.toEntity()));
         log.info("NasaCMEJob finished at [{}}", new Date());
     }
 
