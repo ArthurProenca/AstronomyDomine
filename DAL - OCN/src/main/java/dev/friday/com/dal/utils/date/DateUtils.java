@@ -29,4 +29,19 @@ public class DateUtils {
             return null;
         }
     }
+
+    public static String getThisYear() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        return formatter.format(java.time.LocalDate.now());
+    }
+
+    public static String getThisMonth() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM");
+        return formatter.format(java.time.LocalDate.now());
+    }
+
+    public static String getThisDay() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd");
+        return formatter.format(java.time.LocalDate.now());
+    }
 }
