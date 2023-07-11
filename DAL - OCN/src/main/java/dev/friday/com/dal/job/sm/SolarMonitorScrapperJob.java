@@ -33,51 +33,20 @@ public class SolarMonitorScrapperJob {
     @Value("${solar-monitor.uri}")
     private String solarMonitorUri;
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void run() {
         log.info("SolarMonitorScrapperJob started at [{}}", new Date());
-        Document document = Scrapper.getDocumentFromUri(getFormattedUrl());
-        if(document == null) {
-            return;
-        }
-
-        List<Element> elements = Scrapper.getElementFromDocument(document, "a");
-        List<String> fdPngUris = getFdPngsUriFromElements(elements);
+        List<String> fdPngUris = solarMonitorService.getSolarMonitorImageUris();
 
         for(String uri : fdPngUris) {
             solarMonitorService.save(SolarMonitor.builder()
                     .image(solarMonitorClient.getSolarMonitorData(uri))
                     .uri(solarMonitorUri + "data/" + uri)
-                    .relativeDate(new Date())
+                    .relativeDate(DateUtils.getTodayDateInUSAPatternWithTime())
                     .build());
         }
 
         log.info("SolarMonitorScrapperJob finished at [{}}", new Date());
-    }
-    private List<String> getFdPngsUriFromElements(final List<Element> elements) {
-        List<String> fdPngsUriList = new ArrayList<>();
-        for(Element element : elements) {
-            if(element.attr("href").contains("fd")) {
-                fdPngsUriList.add(getFormattedUrlWithPathVariable(element.attr("href")));
-            }
-        }
-        return fdPngsUriList;
-    }
-
-    private String getFormattedUrl() {
-        return String.format("%s/data/%s/%s/%s/pngs/shmi/",
-                settingDefinitionService.getSettingValue("solar_monitor_url").getSettingValue(),
-                DateUtils.getThisYear(),
-                DateUtils.getThisMonth(),
-                DateUtils.getThisDay());
-    }
-
-    private String getFormattedUrlWithPathVariable(String pathVariable) {
-        return String.format("/%s/%s/%s/pngs/shmi/%s",
-                DateUtils.getThisYear(),
-                DateUtils.getThisMonth(),
-                DateUtils.getThisDay(),
-                pathVariable);
     }
 
 }

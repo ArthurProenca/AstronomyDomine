@@ -6,7 +6,6 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Types;
-import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -26,7 +25,7 @@ public class SolarMonitor extends BaseEntity {
     private String uri;
 
     @Column(name = "RELATIVE_DATE")
-    private Date relativeDate;
+    private String relativeDate;
 
     @Lob
     @JdbcTypeCode(Types.BINARY)
