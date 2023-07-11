@@ -28,7 +28,7 @@ public class NasaNEOJob {
 
     private final NasaNEOClient nasaNEOClient;
 
-    @Scheduled(cron = "0 0 * * * *")
+   /* @Scheduled(cron = "0 0 * * * *")
     public void run() {
         log.info("NasaNEOJob started at [{}}", new Date());
 
@@ -44,7 +44,7 @@ public class NasaNEOJob {
         }
 
         log.info("NasaNEOJob finished at [{}}", new Date());
-    }
+    }*/
 
     private String getEndDate() {
         return getStartDate();

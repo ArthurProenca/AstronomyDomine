@@ -33,6 +33,7 @@ public class SolarMonitorScrapperJob {
     @Value("${solar-monitor.uri}")
     private String solarMonitorUri;
 
+    /*
     @Scheduled(cron = "0 0 * * * *")
     public void run() {
         log.info("SolarMonitorScrapperJob started at [{}}", new Date());
@@ -47,6 +48,6 @@ public class SolarMonitorScrapperJob {
         }
 
         log.info("SolarMonitorScrapperJob finished at [{}}", new Date());
-    }
+    }*/
 
 }

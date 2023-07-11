@@ -24,13 +24,13 @@ public class NasaCMEJob {
     @Value("${nasa.api.key}")
     private String nasaApiKey;
 
-    @Scheduled(cron = "0 0 * * * *")
+    /*@Scheduled(cron = "0 0 * * * *")
     public void run() {
         log.info("NasaCMEJob started at [{}}", new Date());
         nasaCMEClient.getCMEByDateInterval(getStartDate(), getEndDate(), nasaApiKey)
                 .forEach(cmeDTO -> cmeService.save(cmeDTO.toEntity()));
         log.info("NasaCMEJob finished at [{}}", new Date());
-    }
+    }*/
 
     private String getEndDate() {
         return getStartDate();
