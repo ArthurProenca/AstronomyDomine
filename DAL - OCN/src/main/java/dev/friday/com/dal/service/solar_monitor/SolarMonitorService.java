@@ -1,5 +1,6 @@
 package dev.friday.com.dal.service.solar_monitor;
 
+import dev.friday.com.dal.client.solar_monitor.SolarMonitorClient;
 import dev.friday.com.dal.domain.entity.solar_monitor.SolarMonitor;
 import dev.friday.com.dal.repository.solar_monitor.SolarMonitorRepository;
 import dev.friday.com.dal.service.setting.definition.SettingDefinitionService;
@@ -27,13 +28,15 @@ public class SolarMonitorService {
 
     private final SettingDefinitionService settingDefinitionService;
 
+    private final SolarMonitorClient solarMonitorClient;
+
     @Value("${solar-monitor.uri}")
     private String solarMonitorUri;
 
     public void save(final SolarMonitor solarMonitor) {
         solarMonitorRepository.save(solarMonitor);
     }
-    public ResponseEntity<?> getSolarMonitorByISODate(LocalDate date) {
+    public List<String> getSolarMonitorByISODate(LocalDate date, boolean fullUri) {
         List<String> formattedUris = new ArrayList<>();
         int year = date.getYear();
         String month = DateUtils.getMonthAsString(date.getMonthValue());
@@ -45,10 +48,10 @@ public class SolarMonitorService {
         List<String> fdPngUris = getFdPngsUriFromElements(elements, year, month, day);
 
         for(String uri : fdPngUris) {
-            formattedUris.add(solarMonitorUri + "data/" + uri);
+                formattedUris.add(fullUri ? solarMonitorUri + "data/" + uri : uri);
         }
 
-        return ResponseEntity.ok(formattedUris);
+        return formattedUris;
     }
 
     public List<String> getSolarMonitorImageUris() {
@@ -106,5 +109,13 @@ public class SolarMonitorService {
                 DateUtils.getThisYear(),
                 DateUtils.getThisMonth(),
                 DateUtils.getThisDay());
+    }
+
+    public byte[] getSolarMonitorImages(LocalDate date, int index) {
+        List<String> uris = getSolarMonitorByISODate(date, false);
+        for(int i = 0; i < uris.size(); i++) {
+            uris.set(i, uris.get(i).replace(solarMonitorUri + "/data", ""));
+        }
+        return solarMonitorClient.getSolarMonitorData(uris.get(index));
     }
 }
