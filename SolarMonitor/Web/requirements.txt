@@ -1,0 +1,7 @@
+beautifulsoup4==4.12.3
+fastapi==0.109.2
+imageio==2.34.0
+matplotlib==3.8.3
+numpy==1.26.4
+opencv_python_headless==4.9.0.80
+Requests==2.31.0
