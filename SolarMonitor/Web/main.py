@@ -57,6 +57,9 @@ def get_solar_monitor_info(
     if sunspot_numbers is not None:
         result = utils.get_by_noaa_number(result, sunspot_numbers)
 
-    graphic_utils.create_graphic(result)
+    img_bytes = BytesIO()
 
-    return result
+    graphic_utils.create_graphic(result, img_bytes)
+
+    img_bytes.seek(0)
+    return StreamingResponse(img_bytes, media_type="image/png")

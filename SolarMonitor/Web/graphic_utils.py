@@ -7,7 +7,7 @@ def extract_x_value(position):
     x_value = re.search(r'\(([-+]?\d+)', position).group(1)
     return int(x_value)
 
-def create_graphic(result):
+def create_graphic(result, img_bytes):
     plt.figure(figsize=(18, 14))  # Ajuste o tamanho da figura conforme necessário
 
     for entry in result:
@@ -41,4 +41,6 @@ def create_graphic(result):
     # Adicionar margens
     plt.subplots_adjust(left=0.1, right=0.85, top=0.9, bottom=0.1)
 
-    plt.savefig('graphic.png', dpi=300)
+    plt.savefig(img_bytes, format='png')
+
+    plt.close()
