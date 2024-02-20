@@ -1,4 +1,36 @@
+import easyocr
 import cv2
+import numpy as np
+
+def highlight_text_in_images(images, texts):
+    # Create an EasyOCR reader with the desired language
+    reader = easyocr.Reader(['en'])
+
+    # For each image, highlight the specified text
+    for i, image in enumerate(images):
+        # Convert the image to a NumPy array
+        image_np = np.array(image)
+
+        # Convert the image to a format compatible with EasyOCR
+        image_np_rgb = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+
+        # Extract the text from the image using EasyOCR
+        result = reader.readtext(image_np_rgb)
+
+        # Highlight the specified text
+        for detection in result:
+            detected_text = detection[1]
+            for text in texts:
+                if text in detected_text:
+                    # Highlight the text in the original image
+                    bbox = detection[0]
+                    cv2.rectangle(image_np_rgb, tuple(map(int, bbox[0])), tuple(map(int, bbox[2])), (0, 255, 0), 2)
+
+        # Convert the image back to the original format
+        image = cv2.cvtColor(image_np_rgb, cv2.COLOR_RGB2BGR)
+        images[i] = image
+
+    return images
 
 def preprocess_image(image, day):
     # Convert the image to grayscale

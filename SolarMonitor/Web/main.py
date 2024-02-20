@@ -1,8 +1,9 @@
-from typing import Union, List
-from fastapi import FastAPI, HTTPException, Query
+from typing import List
+from fastapi import FastAPI, Query
 from fastapi.responses import StreamingResponse
 from io import BytesIO
 import datetime
+import image_utils
 import graphic_utils
 import utils
 import imageio
@@ -12,6 +13,7 @@ app = FastAPI()
 @app.get("/solar-monitor/{initial_date}/{number_of_days}/gif")
 def get_solar_monitor_gif_from_days(initial_date: str, 
                                     number_of_days: int, 
+                                    sunspot_numbers: List[str] = Query(None, description="Sunspot number"),
                                     is_backward: bool = Query(False, description="Whether to go backward in time")):
     initial_date = datetime.datetime.strptime(initial_date, "%Y-%m-%d")
 
@@ -23,6 +25,10 @@ def get_solar_monitor_gif_from_days(initial_date: str,
     days_arr, _, images = utils.get_solar_monitor_info(initial_date, final_date, is_backward)
 
     images = utils.download_and_preprocess_images(images, days_arr)
+
+    if sunspot_numbers is not None:
+        images = image_utils.highlight_text_in_images(images, sunspot_numbers)
+
     gif_bytes = BytesIO()
     imageio.mimsave(gif_bytes, images, format='gif', fps=1, loop=0)
     gif_bytes.seek(0)
